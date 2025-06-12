@@ -11,18 +11,6 @@ module.exports.createRole = async function (req, res) {
     // Convert passed JSON in string format
     const jsonObj = req.body || req;
 
-    // // Validate the user data
-    // const validation = userValidator.validateUser(jsonObj);
-
-    // // If validation fails, return error response
-    // if (!validation.valid) {
-    //     return res.status(400).json({
-    //         status: "400",
-    //         message: "Invalid input",
-    //         error: validation.error
-    //     });
-    // }
-
     // Proceed with the data if validation is successful
     const { roleName } = jsonObj;
 

@@ -4,7 +4,7 @@ const Joi = require('joi');
 const validateStaffValidator = (data) => {
   const schema = Joi.object({
     staffName: Joi.string().alphanum().min(3).max(30).required(), // Name
-    staffContactInfo: Joi.number.required(),
+    staffContactInfo: Joi.number().required(),
     roleId: Joi.string().min(1).max(255).required(),
     createdAt: Joi.date().optional(), // Created At
     updatedAt: Joi.date().optional(), // Updated At

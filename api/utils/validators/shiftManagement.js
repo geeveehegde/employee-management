@@ -6,7 +6,7 @@ const validateShiftManagementValidator = (data) => {
     staffId: Joi.string().required(),
     shiftId: Joi.string().required(),
     comments: Joi.string().required(),
-    date: Joi.date().require(),
+    date: Joi.string().optional(),
     createdAt: Joi.date().optional(), // Created At
     updatedAt: Joi.date().optional(), // Updated At
     createdBy: Joi.string().alphanum().min(3).max(30).optional(), // Created By

@@ -62,6 +62,38 @@ module.exports.createNewShiftManagement = async function (req, res) {
             message: "Invalid Shift: Role does not exist",
             error: "Shift not found in database"
         });
+    } 
+
+    // Check shift capacity
+    const shiftManagementCollection = db.collection('shiftManagement');
+    const currentAssignments = await shiftManagementCollection.countDocuments({
+        shiftId: ObjectId.isValid(shiftId) ? new ObjectId(shiftId) : shiftId,
+    });
+
+    // Get the capacity from shiftShedule (assuming it has a 'capacity' field)
+    const shiftCapacity = shiftSheduleExists.capacity || 0;
+
+    if (currentAssignments <= shiftCapacity  ) {
+        return res.status(400).json({
+            status: "400",
+            message: "Shift capacity exceeded",
+            error: `This shift has reached its maximum capacity of ${shiftCapacity}. Current assignments: ${currentAssignments}`
+        });
+    }
+
+    const duplicateStaffCheck = await shiftManagementCollection.findOne({
+        staffId: staffId,
+        shiftId: shiftId,
+    });
+
+    console.log("duplicateStaffCheck", duplicateStaffCheck)
+
+    if (duplicateStaffCheck) {
+        return res.status(400).json({
+            status: "400",
+            message: "Duplicate assignment not allowed",
+            error: "This staff member is already assigned to this shift on the same date"
+        });
     }
 
     const collection = db.collection('shiftManagement');

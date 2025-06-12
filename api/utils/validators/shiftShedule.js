@@ -4,9 +4,9 @@ const Joi = require('joi');
 const validateShiftSheduleValidator = (data) => {
   const schema = Joi.object({
     shiftName: Joi.string().alphanum().min(3).max(30).required(), // Name
-    capacity: Joi.number.required(),
+    capacity: Joi.number().required(),
     type: Joi.string().min(1).max(255).required(),
-    date: Joi.date().require(),
+    date: Joi.string().optional(),
     createdAt: Joi.date().optional(), // Created At
     updatedAt: Joi.date().optional(), // Updated At
     createdBy: Joi.string().alphanum().min(3).max(30).optional(), // Created By
